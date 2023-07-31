@@ -1,3 +1,7 @@
+body {
+  background-color: rgb(240, 240, 240);
+}
+
 #purple-background {
   background-color: rgb(86, 43, 129);
   padding: 0;
@@ -7,4 +11,54 @@
   color: white;
   font-size: 1rem;
   font-weight: normal;
+}
+
+#photo {
+  display: none;
+}
+
+#image {
+  width: 100%;
+}
+
+.title-for-note,
+.url-for-note,
+.note {
+  flex: 1;
+}
+
+.title-for-note input,
+.url-for-note input,
+.note textarea {
+  width: 100%;
+}
+
+.textarea-padding {
+  padding: 0.5rem;
+}
+
+#submit {
+  position: absolute;
+  right: 2rem;
+}
+
+.submit-button-to-bottom-left {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.submit-button {
+  background-color: rgb(86, 43, 129);
+  color: white;
+  padding: 0.4rem;
+  border-radius: 0.4rem;
+  text-transform: uppercase;
+}
+
+#img-button {
+  cursor: pointer;
+}
+
+label {
+  display: block;
 }

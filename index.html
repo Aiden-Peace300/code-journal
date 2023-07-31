@@ -24,7 +24,54 @@
       </div>
     </header>
     <main class="container">
-      <div data-view="entry-form"></div>
+      <div data-view="entry-form">
+        <form>
+          <div class="row">
+            <div class="column-full">
+              <h2>New Entry</h2>
+            </div>
+          </div>
+          <div class="row">
+            <div class="column-half">
+              <div class="photo">
+                <input type="file" id="photo" name="photo" accept="image/*" />
+                <label for="photo" id="img-button"></label>
+                <img
+                  id="image"
+                  src="images/placeholder-image-square.jpg"
+                  alt="Photo place holder" />
+              </div>
+            </div>
+            <div class="column-half">
+              <div class="title-for-note">
+                <label class="spacing" for="note-title"> Title </label> <br />
+                <input type="text" title="note-title" />
+              </div>
+              <br />
+              <div class="url-for-note">
+                <label for="photo-url"> Photo URL </label> <br />
+                <input type="text" title="photo-url" />
+              </div>
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <div class="column-full">
+              <div class="note">
+                <label for="notes"> Notes </label> <br />
+                <textarea class="textarea-padding" rows="8"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="column-full submit-button-to-bottom-left">
+              <div class="submit">
+                <input class="submit-button" type="submit" value="Save" />
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
       <div data-view="entries" class="hidden"></div>
     </main>
     <script src="js/data.js"></script>
