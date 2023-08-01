@@ -13,12 +13,12 @@ body {
   font-weight: normal;
 }
 
-#photo {
-  display: none;
-}
-
 #image {
   width: 100%;
+}
+
+#img-button {
+  cursor: pointer;
 }
 
 .title-for-note,
@@ -37,11 +37,6 @@ body {
   padding: 0.5rem;
 }
 
-#submit {
-  position: absolute;
-  right: 2rem;
-}
-
 .submit-button-to-bottom-left {
   display: flex;
   justify-content: flex-end;
@@ -53,12 +48,5 @@ body {
   padding: 0.4rem;
   border-radius: 0.4rem;
   text-transform: uppercase;
-}
-
-#img-button {
   cursor: pointer;
-}
-
-label {
-  display: block;
 }
