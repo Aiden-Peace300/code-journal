@@ -1,4 +1,4 @@
-const $photoUrlInput = document.querySelector('#photo-url-input');
+const $photoUrlInput = document.querySelector('#photo-url');
 const $image = document.querySelector('#image');
 const $form = document.querySelector('#note-form');
 
@@ -10,8 +10,8 @@ function handlePhotoUrl(event) {
 function handleSubmit(event) {
   event.preventDefault(); // Preventing form submission
 
-  const title = $form.elements.noteTitle.value;
-  const photoUrl = $form.elements.photoUrl.value;
+  const title = $form.elements['note-title'].value;
+  const photoUrl = $form.elements['photo-url'].value;
   const notes = $form.elements.message.value;
 
   const newEntry = {
