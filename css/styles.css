@@ -1,0 +1,67 @@
+body {
+  background-color: rgb(240, 240, 240);
+}
+
+input,
+textarea {
+  cursor: pointer;
+}
+
+input:focus,
+textarea:focus {
+  border-color: rgb(86, 43, 129);
+}
+
+label,
+img {
+  display: block;
+}
+
+#purple-background {
+  background-color: rgb(86, 43, 129);
+  padding: 0;
+}
+
+#header-style {
+  color: white;
+  font-size: 1rem;
+  font-weight: normal;
+}
+
+#image {
+  width: 100%;
+}
+
+#img-button {
+  cursor: pointer;
+}
+
+.title-for-note,
+.url-for-note,
+.note {
+  flex: 1;
+}
+
+.title-for-note input,
+.url-for-note input,
+.note textarea {
+  width: 100%;
+}
+
+.textarea-padding {
+  padding: 0.5rem;
+}
+
+.submit-button-to-bottom-left {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.submit-button {
+  background-color: rgb(86, 43, 129);
+  color: white;
+  padding: 0.4rem;
+  border-radius: 0.4rem;
+  text-transform: uppercase;
+  cursor: pointer;
+}
