@@ -2,6 +2,16 @@ body {
   background-color: rgb(240, 240, 240);
 }
 
+input,
+textarea {
+  cursor: pointer;
+}
+
+input:focus,
+textarea:focus {
+  border-color: rgb(86, 43, 129);
+}
+
 label,
 img {
   display: block;
