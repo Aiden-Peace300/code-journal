@@ -28,7 +28,8 @@ img {
   font-weight: normal;
 }
 
-#image {
+#image,
+#image-for-note {
   width: 100%;
 }
 
@@ -57,11 +58,101 @@ img {
   justify-content: flex-end;
 }
 
-.submit-button {
+.entry-and-button-same-row {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.submit-button,
+.new-button {
   background-color: rgb(86, 43, 129);
   color: white;
   padding: 0.4rem;
   border-radius: 0.4rem;
   text-transform: uppercase;
   cursor: pointer;
+}
+
+/* seprate */
+
+/* Additional styles for entries */
+.no-entries-message,
+.entry {
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+
+.no-entries-message {
+  text-align: center;
+}
+
+#entries-list {
+  padding-left: 0;
+}
+
+.entry-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0;
+}
+
+.entry-info {
+  align-self: flex-start;
+  margin-top: 1rem;
+}
+
+.entry-title {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.entry-notes {
+  color: #666;
+}
+
+.entry-photo {
+  margin-left: auto;
+  flex: 0 0 50%;
+  text-align: right;
+}
+
+.entry-photo img {
+  width: 100%;
+}
+
+@media only screen and (width <= 400px) {
+  .entry-content {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+  }
+
+  .entry-photo {
+    margin: 0;
+    flex-basis: 100%;
+    margin-bottom: 0.5rem;
+    text-align: flex-start;
+  }
+
+  .entry-info {
+    margin-top: 0.5rem;
+    display: block;
+  }
+}
+
+@media only screen and (width >= 768px) {
+  .entry-content {
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+  }
+
+  .entry-photo {
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+
+  .entry-info {
+    margin-top: 0;
+  }
 }
