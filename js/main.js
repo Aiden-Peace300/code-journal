@@ -160,11 +160,11 @@ function toggleNoEntries(show) {
 function viewSwap(nameOfView) {
   // Show the view whose name was provided as an argument
   if (nameOfView === 'entries') {
-    $entriesView.classList.add('hidden');
-    $entryForm.classList.remove('hidden');
-  } else if (nameOfView === 'entry-form') {
-    $entryForm.classList.add('hidden');
     $entriesView.classList.remove('hidden');
+    $entryForm.classList.add('hidden');
+  } else if (nameOfView === 'entry-form') {
+    $entryForm.classList.remove('hidden');
+    $entriesView.classList.add('hidden');
   }
 
   // Update the data.view property to track the currently shown view
@@ -177,11 +177,8 @@ $form.addEventListener('submit', handleSubmit);
 
 // Event listener to update the view when the page is loaded
 document.addEventListener('DOMContentLoaded', () => {
-  // Calling updateEntriesView on page load to populate the entries list
-  // (Note: I have removed the updateEntriesView function since it's no longer needed)
-
   // Showing the view which was displayed prior to page refresh, or default to "entries" view
-  viewSwap(data.view || 'entries');
+  viewSwap(data.view);
 
   // Conditionally use the toggleNoEntries function to show or remove the "No entries" text if needed
   toggleNoEntries(data.entries.length === 0);
