@@ -132,7 +132,7 @@ function handleSubmit(event) {
   const entryElement = renderEntry(newEntry);
 
   // Append the new entry element to the entries list
-  $entriesList.appendChild(entryElement);
+  $entriesList.prepend(entryElement);
 
   // Conditionally use the toggleNoEntries function to remove the "No entries" text if needed
   toggleNoEntries(data.entries.length === 0);
@@ -175,8 +175,23 @@ function viewSwap(nameOfView) {
 $photoUrlInput.addEventListener('input', handlePhotoUrl);
 $form.addEventListener('submit', handleSubmit);
 
+// Function to handle the "New" button click
+function handleNewButtonClick(event) {
+  viewSwap('entry-form');
+}
+
+// Add event listener for the "New" button
+const $newEntryButton = document.querySelector('#new-entry-button');
+$newEntryButton.addEventListener('click', handleNewButtonClick);
+
 // Event listener to update the view when the page is loaded
 document.addEventListener('DOMContentLoaded', () => {
+  // Loop through the parsed entries and append them to the entries list
+  for (let i = 0; i < data.entries.length; i++) {
+    const entryElement = renderEntry(data.entries[i]);
+    $entriesList.appendChild(entryElement);
+  }
+
   // Showing the view which was displayed prior to page refresh, or default to "entries" view
   viewSwap(data.view);
 
