@@ -74,6 +74,10 @@ img {
   cursor: pointer;
 }
 
+.new-button {
+  text-decoration: none;
+}
+
 /* seprate */
 
 /* Additional styles for entries */

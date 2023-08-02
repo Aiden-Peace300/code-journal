@@ -22,12 +22,13 @@
         <div class="column-full">
           <div class="row">
             <h1 id="header-style">Code Journal</h1>
+            <a id="navbar-entries-link" href="#"></a>
           </div>
         </div>
       </div>
     </header>
     <main class="container">
-      <div data-view="entry-form" class="hidden">
+      <div data-view="entry-form">
         <form id="note-form">
           <div class="row">
             <div class="column-full">
@@ -88,13 +89,13 @@
           </div>
         </form>
       </div>
-      <div data-view="entries">
+      <div data-view="entries" class="hidden">
         <div class="row">
           <div class="column-full">
             <div class="entry-and-button-same-row">
               <h2>Entries</h2>
               <div class="new new-button-left-of-column-full">
-                <button class="new-button">New</button>
+                <a class="new-button" href="#" id="new-entry-button">New</a>
               </div>
             </div>
           </div>

@@ -3,7 +3,6 @@ const $image = document.querySelector('#image');
 const $form = document.querySelector('#note-form');
 const $entryForm = document.querySelector('[data-view="entry-form"]');
 const $entriesView = document.querySelector('[data-view="entries"]');
-const $entriesViewList = document.querySelector('[data-view="entries-list"]');
 
 function handlePhotoUrl(event) {
   const photoUrl = $photoUrlInput.value;
@@ -69,9 +68,42 @@ function updateEntriesView() {
     const entryElement = renderEntry(entry);
     $entriesList.appendChild(entryElement);
   }
+  // Check if there are entries to determine whether to show or hide the "No entries" message
+  toggleNoEntries(data.entries.length === 0);
+}
+
+function toggleNoEntries(show) {
+  const $entriesList = document.querySelector('[data-view="entries"] ul');
+
+  // If 'show' is true, display the "No entries" message; else, hide it
+  if (show) {
+    $entriesList.style.display = 'none';
+  } else {
+    $entriesList.style.display = 'block';
+  }
+}
+
+function viewSwap(nameOfView) {
+  const entriesViewElement = $entriesView;
+  const entryFormViewElement = $entryForm;
+
+  // Hide both views first
+  entriesViewElement.classList.add('hidden');
+  entryFormViewElement.classList.add('hidden');
+
+  // Show the view whose name was provided as an argument
+  if (nameOfView === 'entries') {
+    entriesViewElement.classList.remove('hidden');
+  } else if (nameOfView === 'entry-form') {
+    entryFormViewElement.classList.remove('hidden');
+  }
+
+  // Update the data.view property to track the currently shown view
+  data.view = nameOfView;
 }
 
 // Function to handle form submission
+// Inside the handleSubmit function in main.js
 function handleSubmit(event) {
   event.preventDefault(); // Prevent form submission
 
@@ -92,13 +124,14 @@ function handleSubmit(event) {
   // Adding the newEntry to the entries array
   data.entries.unshift(newEntry);
 
-  // Update the entries view with the new entry
+  // Call updateEntriesView to update the UI with the new entry
   updateEntriesView();
 
-  // Hide the entry form and show the entries view
-  $entryForm.classList.add('hidden');
-  $entriesView.classList.remove('hidden');
-  $entriesViewList.classList.add('hidden');
+  // Use the viewSwap function to show the "entries" view
+  viewSwap('entries');
+
+  // Conditionally use the toggleNoEntries function to remove the "No entries" text if needed
+  toggleNoEntries(data.entries.length === 0);
 
   // Resetting the preview image's src attribute back to the placeholder image
   $image.src = 'images/placeholder-image-square.jpg';
@@ -111,12 +144,28 @@ function handleSubmit(event) {
 $photoUrlInput.addEventListener('input', handlePhotoUrl);
 $form.addEventListener('submit', handleSubmit);
 
-// Initially hide the entries view and show the entry form on page load
+// Initially show the entries view and hide the entry form on page load
 $entryForm.classList.add('hidden');
 $entriesView.classList.remove('hidden');
-$entriesViewList.classList.remove('hidden');
 
-// Updating the entries view when the DOM content is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
+  // Call updateEntriesView on page load to populate the entries list
   updateEntriesView();
+
+  // Show the view which was displayed prior to page refresh
+  viewSwap('entries' || data.view);
+
+  // Conditionally use the toggleNoEntries function to show or remove the "No entries" text if needed
+  toggleNoEntries(data.entries.length === 0);
+});
+
+const $navbarEntriesLink = document.querySelector('#navbar-entries-link');
+$navbarEntriesLink.addEventListener('click', () => {
+  viewSwap('entries');
+});
+
+// Add event listener to the "NEW" button in the entries view to show the "entry-form"
+const $newButton = document.querySelector('.new-button');
+$newButton.addEventListener('click', () => {
+  viewSwap('entry-form');
 });
