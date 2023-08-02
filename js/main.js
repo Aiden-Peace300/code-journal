@@ -58,7 +58,7 @@ function updateEntriesView() {
   // Find the HTML element with the attribute "data-view" set to "entries" and
   // selectng its first <ul> (unordered list) element.
   // Assign the selected <ul> element to the variable $entriesList.
-  const $entriesList = document.querySelector('[data-view="entries"] ul');
+  const $entriesList = document.querySelector('.entries-list');
 
   // Clear existing entries from the view
   $entriesList.innerHTML = '';
@@ -73,13 +73,13 @@ function updateEntriesView() {
 }
 
 function toggleNoEntries(show) {
-  const $entriesList = document.querySelector('[data-view="entries"] ul');
+  const $entriesListMsg = document.querySelector('.no-entries-message');
 
   // If 'show' is true, display the "No entries" message; else, hide it
   if (show) {
-    $entriesList.style.display = 'none';
+    $entriesListMsg.classList.remove('hidden');
   } else {
-    $entriesList.style.display = 'block';
+    $entriesListMsg.classList.add('hidden');
   }
 }
 
@@ -149,11 +149,11 @@ $entryForm.classList.add('hidden');
 $entriesView.classList.remove('hidden');
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Call updateEntriesView on page load to populate the entries list
+  // Calling updateEntriesView on page load to populate the entries list
   updateEntriesView();
 
-  // Show the view which was displayed prior to page refresh
-  viewSwap('entries' || data.view);
+  // Showing the view which was displayed prior to page refresh, or default to "entries" view
+  viewSwap(data.view || 'entries');
 
   // Conditionally use the toggleNoEntries function to show or remove the "No entries" text if needed
   toggleNoEntries(data.entries.length === 0);
@@ -164,7 +164,7 @@ $navbarEntriesLink.addEventListener('click', () => {
   viewSwap('entries');
 });
 
-// Add event listener to the "NEW" button in the entries view to show the "entry-form"
+// Adding a event listener to the "NEW" button in the entries view to show the "entry-form"
 const $newButton = document.querySelector('.new-button');
 $newButton.addEventListener('click', () => {
   viewSwap('entry-form');
