@@ -22,6 +22,7 @@
         <div class="column-full">
           <div class="row">
             <h1 id="header-style">Code Journal</h1>
+            <a id="navbar-entries-link" href="#entries">Entries</a>
           </div>
         </div>
       </div>
@@ -88,7 +89,22 @@
           </div>
         </form>
       </div>
-      <div data-view="entries" class="hidden"></div>
+      <div data-view="entries" class="hidden">
+        <div class="row">
+          <div class="column-full">
+            <div class="entry-and-button-same-row">
+              <h2>Entries</h2>
+              <div class="new new-button-left-of-column-full">
+                <a class="new-button" href="#entry-form" id="new-entry-button"
+                  >New</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="no-entries-message">No entries have been recorded yet.</p>
+        <ul id="entries-list"></ul>
+      </div>
     </main>
     <script src="js/data.js"></script>
     <script src="js/main.js"></script>

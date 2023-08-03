@@ -6,7 +6,7 @@ window.addEventListener('beforeunload', handleStorage);
 
 let data = {
   view: 'entry-form',
-  entries: [], // Initialize 'entries' as an empty array
+  entries: [],
   editing: null,
   nextEntryId: 1,
 };
