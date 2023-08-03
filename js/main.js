@@ -181,9 +181,17 @@ function handleNewButtonClick(event) {
   viewSwap('entry-form');
 }
 
+// Function to handle the "New" button click
+function handleNavbarEntriesLinkClick(event) {
+  viewSwap('entries');
+}
+
 // Add event listener for the "New" button
 const $newEntryButton = document.querySelector('#new-entry-button');
 $newEntryButton.addEventListener('click', handleNewButtonClick);
+
+const $navbarEntriesLink = document.querySelector('#navbar-entries-link');
+$navbarEntriesLink.addEventListener('click', handleNavbarEntriesLinkClick);
 
 // Event listener to update the view when the page is loaded
 document.addEventListener('DOMContentLoaded', () => {
