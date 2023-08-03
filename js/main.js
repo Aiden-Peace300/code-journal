@@ -34,7 +34,7 @@ const $noEntriesMessage = document.querySelector('.no-entries-message');
 
 // AKA: the handlePhotoUrl() Function will handle changes in the photo URL input field.
 function handlePhotoUrl(event) {
-  // Retrieve the value of the photo URL input field
+  // Getting the value of the photo URL input field
   const photoUrl = $photoUrlInput.value;
 
   // Update the src attribute of the image element with the provided URL
@@ -54,24 +54,24 @@ function handlePhotoUrl(event) {
 function renderEntry(entry) {
   // Creating a new HTML list item element (<li>) and assigning it to the variable $entryElement.
   const $entryElement = document.createElement('li');
-  // Add the CSS class name "entry" to the newly created list item element using the classList.add() method.
+  // Adding the CSS class name "entry" to the newly created list item element using the classList.add() method.
   $entryElement.classList.add('entry');
 
   // Creating a new HTML div element (<div>) and assigning it to the variable $entryContent.
   const $entryContent = document.createElement('div');
-  // Add the CSS class name "entry-content" to the newly created div element using the classList.add() method.
+  // Adding the CSS class name "entry-content" to the newly created div element using the classList.add() method.
   $entryContent.classList.add('entry-content');
 
   // Creating a new HTML div element (<div>) and assigning it to the variable $entryText.
   const $entryText = document.createElement('div');
-  // Add the CSS class name "entry-text" to the newly created div element using the classList.add() method.
+  // Adding the CSS class name "entry-text" to the newly created div element using the classList.add() method.
   $entryText.classList.add('entry-text');
 
   // Creating a new HTML heading element (<h3>) and assigning it to the variable $entryTitle.
   const $entryTitle = document.createElement('h3');
-  // Add the CSS class name "entry-title" to the newly created heading element using the classList.add() method.
+  // Adding the CSS class name "entry-title" to the newly created heading element using the classList.add() method.
   $entryTitle.classList.add('entry-title');
-  // Set the text content of the heading element to the entry's title.
+  // Setting the text content of the heading element to the entry's title.
   $entryTitle.textContent = entry.title;
 
   // Creating a new HTML paragraph element (<p>) and assigning it to the variable $entryNotes.
@@ -108,7 +108,7 @@ function renderEntry(entry) {
 }
 
 // Function to handle form submission
-function handleSubmit(event) {
+function handleSubmit() {
   event.preventDefault(); // Prevent form submission
 
   const title = $form.elements['note-title'].value;
@@ -132,6 +132,7 @@ function handleSubmit(event) {
   const entryElement = renderEntry(newEntry);
 
   // Append the new entry element to the entries list
+  // prepend() => method is used to insert one or multiple elements as the first child of a parent element
   $entriesList.prepend(entryElement);
 
   // Conditionally use the toggleNoEntries function to remove the "No entries" text if needed
