@@ -54,18 +54,23 @@ function handlePhotoUrl(event) {
 function renderEntry(entry) {
   // Creating a new HTML list item element (<li>) and assigning it to the variable $entryElement.
   const $entryElement = document.createElement('li');
+  $entryElement.setAttribute('data-entry-id', entry.entryId);
   // Adding the CSS class name "entry" to the newly created list item element using the classList.add() method.
   $entryElement.classList.add('entry');
 
   // Creating a new HTML div element (<div>) and assigning it to the variable $entryContent.
   const $entryContent = document.createElement('div');
   // Adding the CSS class name "entry-content" to the newly created div element using the classList.add() method.
-  $entryContent.classList.add('entry-content');
+  $entryContent.classList.add('row');
 
   // Creating a new HTML div element (<div>) and assigning it to the variable $entryText.
   const $entryText = document.createElement('div');
   // Adding the CSS class name "entry-text" to the newly created div element using the classList.add() method.
-  $entryText.classList.add('entry-text');
+  $entryText.classList.add('column-half');
+
+  // Creating a new HTML div element (<div>) and assigning it to the variable $columnFull.
+  const $columnHalf = document.createElement('div');
+  $columnHalf.classList.add('title-and-edit-icon-same-row');
 
   // Creating a new HTML heading element (<h3>) and assigning it to the variable $entryTitle.
   const $entryTitle = document.createElement('h3');
@@ -74,81 +79,134 @@ function renderEntry(entry) {
   // Setting the text content of the heading element to the entry's title.
   $entryTitle.textContent = entry.title;
 
+  const $editIconDiv = document.createElement('div');
+  $editIconDiv.classList.add('edit-icon');
+
+  const $editIcon = document.createElement('i');
+  $editIcon.classList.add('fa', 'fa-pencil', 'edit-icon');
+
   // Creating a new HTML paragraph element (<p>) and assigning it to the variable $entryNotes.
   const $entryNotes = document.createElement('p');
-  // Add the CSS class name "entry-notes" to the newly created paragraph element using the classList.add() method.
+  // Adding the CSS class name "entry-notes" to the newly created paragraph element using the classList.add() method.
   $entryNotes.classList.add('entry-notes');
-  // Set the text content of the paragraph element to the entry's notes.
+  // Setting the text content of the paragraph element to the entry's notes.
   $entryNotes.textContent = entry.notes;
+
+  // Creating a new HTML div element (<div>) and assigning it to the variable $entryPhotoDiv.
+  const $entryPhotoDiv = document.createElement('div');
+  // Adding the CSS class name "column-half" to the newly created div element using the classList.add() method.
+  $entryPhotoDiv.classList.add('column-half');
 
   // Creating a new HTML div element (<div>) and assigning it to the variable $entryPhoto.
   const $entryPhoto = document.createElement('div');
-  // Add the CSS class name "entry-photo" to the newly created div element using the classList.add() method.
+  // Adding the CSS class name "entry-photo" to the newly created div element using the classList.add() method.
   $entryPhoto.classList.add('entry-photo');
 
   // Creating a new HTML image element (<img>) and assigning it to the variable $photoImg.
   const $photoImg = document.createElement('img');
-  // Set the source (src) attribute of the image element to the entry's photoUrl.
+  // Setting the source (src) attribute of the image element to the entry's photoUrl.
   $photoImg.src = entry.photoUrl;
-  // Set the alt attribute of the image element to the entry's title.
+  // Setting the alt attribute of the image element to the entry's title.
   $photoImg.alt = entry.title;
-  // Add the CSS class name "entry-image" to the newly created image element using the classList.add() method.
+  // Adding the CSS class name "entry-image" to the newly created image element using the classList.add() method.
   $photoImg.classList.add('entry-image');
 
-  // Append the elements in the correct order to create the desired HTML structure for an entry element.
-  $entryText.appendChild($entryTitle);
-  $entryText.appendChild($entryNotes);
+  // Appending the elements in the correct order to create the desired HTML structure for an entry element.
   $entryPhoto.appendChild($photoImg);
+  $entryPhotoDiv.appendChild($entryPhoto);
+  $columnHalf.appendChild($entryTitle);
+  $editIconDiv.appendChild($editIcon);
+  $columnHalf.appendChild($editIconDiv);
+  $entryText.appendChild($columnHalf);
+  $entryText.appendChild($entryNotes);
+  $entryContent.appendChild($entryPhotoDiv);
   $entryContent.appendChild($entryText);
-  $entryContent.appendChild($entryPhoto);
   $entryElement.appendChild($entryContent);
 
-  // Finally, return the created entry element, which can be later appended to the entries list.
+  // returning the created entry element, which can be later appended to the entries list.
   return $entryElement;
 }
 
-// Function to handle form submission
-function handleSubmit() {
-  event.preventDefault(); // Prevent form submission
+function handleSubmit(event) {
+  event.preventDefault(); // Preventing form submission
 
+  // Getting the values from the form inputs
   const title = $form.elements['note-title'].value;
   const photoUrl = $form.elements['photo-url'].value;
   const notes = $form.elements.message.value;
 
-  const newEntry = {
-    entryId: data.nextEntryId,
-    title,
-    photoUrl,
-    notes,
-  };
+  // Checking if we are editing an existing entry or creating a new one
+  if (data.editing === null) {
+    // Creating a new entry object for a new entry
+    const newEntry = {
+      entryId: data.nextEntryId,
+      title,
+      photoUrl,
+      notes,
+    };
 
-  // Incrementing the nextEntryId for the next form submission
-  data.nextEntryId++;
+    // Incrementing the nextEntryId for the next form submission
+    data.nextEntryId++;
 
-  // Adding the newEntry to the entries array
-  data.entries.unshift(newEntry);
+    // Adding the new entry to the beginning of the entries array
+    data.entries.unshift(newEntry);
 
-  // Call renderEntry to create the new entry element
-  const entryElement = renderEntry(newEntry);
+    // Rendering a new DOM tree for the new entry and prepend it to the entries list
+    const newEntryElement = renderEntry(newEntry);
+    $entriesList.prepend(newEntryElement);
+  } else {
+    // Finding the index of the edited entry in the entries array
+    let index = -1; // Initialize the index to -1 (not found)
 
-  // Append the new entry element to the entries list
-  // prepend() => method is used to insert one or multiple elements as the first child of a parent element
-  $entriesList.prepend(entryElement);
+    for (let i = 0; i < data.entries.length; i++) {
+      // Compare the entryId of the current entry with the entryId we're editing
+      if (data.entries[i].entryId === data.editing.entryId) {
+        index = i; // Found the index!!
+        break; // No need to continue searching
+      }
+    }
 
-  // Conditionally use the toggleNoEntries function to remove the "No entries" text if needed
-  toggleNoEntries(data.entries.length === 0);
+    if (index !== -1) {
+      // Creating a new object with the updated form values
+      const updatedEntry = {
+        ...data.entries[index],
+        title,
+        photoUrl,
+        notes,
+      };
 
-  // Resetting the preview image's src attribute back to the placeholder image
-  $image.src = 'images/placeholder-image-square.jpg';
+      // Replacing the original entry with the updated entry
+      data.entries[index] = updatedEntry;
 
-  // Resetting the form
+      // Rendering a new DOM tree for the updated entry and replace the existing entry
+      const updatedEntryElement = renderEntry(updatedEntry);
+      const $existingEntryElement = document.querySelector(
+        `[data-entry-id="${data.editing.entryId}"]`
+      );
+      $entriesList.replaceChild(updatedEntryElement, $existingEntryElement);
+
+      // Resetting data.editing to null
+      data.editing = null;
+
+      // Updating the title on the form to "New Entry"
+      document.querySelector('.view-title').textContent = 'New Entry';
+    }
+  }
+
+  // Resetting the form inputs
   $form.reset();
 
-  // Use the viewSwap function to show the "entries" view after updating the entries list
+  // Resetting the image src to the placeholder
+  $image.src = 'images/placeholder-image-square.jpg';
+
+  // Show the "entries" view
   viewSwap('entries');
+
+  // Show or hide the "No entries" message as needed
+  toggleNoEntries(data.entries.length === 0);
 }
 
-// Function to toggle the visibility of the "No entries" message
+// toggleNoEntries() Function to toggle the visibility of the "No entries" message
 function toggleNoEntries(show) {
   if (show) {
     $noEntriesMessage.classList.remove('hidden');
@@ -157,9 +215,9 @@ function toggleNoEntries(show) {
   }
 }
 
-// Function to switch between views (entry-form and entries)
+// viewSwap() Function to switch between views (entry-form and entries)
 function viewSwap(nameOfView) {
-  // Show the view whose name was provided as an argument
+  // Showing the view whose name was provided as an argument
   if (nameOfView === 'entries') {
     $entriesView.classList.remove('hidden');
     $entryForm.classList.add('hidden');
@@ -168,13 +226,9 @@ function viewSwap(nameOfView) {
     $entriesView.classList.add('hidden');
   }
 
-  // Update the data.view property to track the currently shown view
+  // Updating the data.view property to track the currently shown view
   data.view = nameOfView;
 }
-
-// Add event listeners
-$photoUrlInput.addEventListener('input', handlePhotoUrl);
-$form.addEventListener('submit', handleSubmit);
 
 // Function to handle the "New" button click
 function handleNewButtonClick(event) {
@@ -186,16 +240,62 @@ function handleNavbarEntriesLinkClick(event) {
   viewSwap('entries');
 }
 
-// Add event listener for the "New" button
+// Function to handle the "edit icon" button click
+function handleEditIconClicked(event) {
+  // Find the closest ancestor with the class name "edit-icon"
+  const editIcon = event.target.closest('.edit-icon');
+
+  if (editIcon) {
+    // Finding the closest ancestor li element
+    const entryElement = editIcon.closest('.entry');
+
+    // Accessing the number of entry clicked (entryId) stored in the "data-entry-id" attribute
+    const entryId = entryElement.getAttribute('data-entry-id');
+
+    let clickedEntry;
+    for (let i = 0; i < data.entries.length; i++) {
+      const entry = data.entries[i];
+      if (entry.entryId === parseInt(entryId)) {
+        clickedEntry = entry;
+        break;
+      }
+    }
+
+    data.editing = clickedEntry;
+
+    // Pre-populating the entry form with the clicked entry's values
+    $form.elements['note-title'].value = clickedEntry.title;
+    $form.elements['photo-url'].value = clickedEntry.photoUrl;
+    $form.elements.message.value = clickedEntry.notes;
+
+    // Updating the displayed image with the photo URL
+    $image.src = clickedEntry.photoUrl;
+
+    // Updating the title of the entry-form view to "Edit Entry"
+    document.querySelector('.view-title').textContent = 'Edit Entry';
+
+    // Using the viewSwap function to show the "entry-form" view
+    viewSwap('entry-form');
+  }
+}
+
+// Adding a event listener for the "PhotoUrl" input
+$photoUrlInput.addEventListener('input', handlePhotoUrl);
+
+// Adding a event listener for the "submit" button
+$form.addEventListener('submit', handleSubmit);
+
+// Adding event listener for the "New" button
 const $newEntryButton = document.querySelector('#new-entry-button');
 $newEntryButton.addEventListener('click', handleNewButtonClick);
 
+// Adding a event listener for the "Entries" button
 const $navbarEntriesLink = document.querySelector('#navbar-entries-link');
 $navbarEntriesLink.addEventListener('click', handleNavbarEntriesLinkClick);
 
-// Event listener to update the view when the page is loaded
+// Adding a event listener to update the view when the page is loaded
 document.addEventListener('DOMContentLoaded', () => {
-  // Loop through the parsed entries and append them to the entries list
+  // Looping through the parsed entries and appending them to the entries list
   for (let i = 0; i < data.entries.length; i++) {
     const entryElement = renderEntry(data.entries[i]);
     $entriesList.appendChild(entryElement);
@@ -204,6 +304,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Showing the view which was displayed prior to page refresh, or default to "entries" view
   viewSwap(data.view);
 
-  // Conditionally use the toggleNoEntries function to show or remove the "No entries" text if needed
+  // toggleNoEntries function to show or remove the "No entries" text if needed
   toggleNoEntries(data.entries.length === 0);
 });
+
+$entriesList.addEventListener('click', handleEditIconClicked);
