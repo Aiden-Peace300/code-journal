@@ -24,6 +24,8 @@ const $entriesList = document.querySelector('#entries-list');
 // Grabbing the first HTML element with the class 'no-entries-message' and storing it in the constant variable $noEntriesMessage.
 // $noEntriesMessage OUTPUT: <li class="no-entries-message">No entries have been recorded yet.</li>
 const $noEntriesMessage = document.querySelector('.no-entries-message');
+
+const $viewTitle = document.querySelector('.view-title');
 // *************************************************************************************************//
 
 // ***************************** handlePhotoUrl() (EVENT LISTENER FUNCTION) ************************//
@@ -189,7 +191,7 @@ function handleSubmit(event) {
       data.editing = null;
 
       // Updating the title on the form to "New Entry"
-      document.querySelector('.view-title').textContent = 'New Entry';
+      $viewTitle.textContent = 'New Entry';
     }
   }
 
@@ -242,12 +244,13 @@ function handleNavbarEntriesLinkClick(event) {
 
 // Function to handle the "edit icon" button click
 function handleEditIconClicked(event) {
-  // Find the closest ancestor with the class name "edit-icon"
-  const editIcon = event.target.closest('.edit-icon');
-
-  if (editIcon) {
+  // Check if the clicked element is an <i> element with the class 'edit-icon'
+  if (
+    event.target.tagName === 'I' &&
+    event.target.classList.contains('edit-icon')
+  ) {
     // Finding the closest ancestor li element
-    const entryElement = editIcon.closest('.entry');
+    const entryElement = event.target.closest('.entry');
 
     // Accessing the number of entry clicked (entryId) stored in the "data-entry-id" attribute
     const entryId = entryElement.getAttribute('data-entry-id');
@@ -272,7 +275,7 @@ function handleEditIconClicked(event) {
     $image.src = clickedEntry.photoUrl;
 
     // Updating the title of the entry-form view to "Edit Entry"
-    document.querySelector('.view-title').textContent = 'Edit Entry';
+    $viewTitle.textContent = 'Edit Entry';
 
     // Using the viewSwap function to show the "entry-form" view
     viewSwap('entry-form');
