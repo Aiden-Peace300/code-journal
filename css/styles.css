@@ -53,9 +53,10 @@ img {
   padding: 0.5rem;
 }
 
-.submit-button-to-bottom-left {
+.space-between {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  margin: 0.7rem;
 }
 
 .title-and-edit-icon-same-row,
@@ -152,7 +153,6 @@ img {
   }
 
   .entry-photo {
-    margin-left: 1rem;
     margin-right: 1rem;
   }
 
@@ -166,5 +166,10 @@ img {
 }
 
 .edit-icon {
+  cursor: pointer;
+}
+
+.delete-button {
+  border: none;
   cursor: pointer;
 }
