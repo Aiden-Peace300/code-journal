@@ -26,6 +26,9 @@ const $entriesList = document.querySelector('#entries-list');
 const $noEntriesMessage = document.querySelector('.no-entries-message');
 
 const $viewTitle = document.querySelector('.view-title');
+const $deleteEntryButton = document.querySelector('#delete-entry-button');
+const $deleteModal = document.querySelector('#delete-modal');
+
 // *************************************************************************************************//
 
 // ***************************** handlePhotoUrl() (EVENT LISTENER FUNCTION) ************************//
@@ -281,6 +284,17 @@ function handleEditIconClicked(event) {
     viewSwap('entry-form');
   }
 }
+
+function showDeleteModal() {
+  $deleteModal.classList.add('block');
+}
+
+function handleDeleteEntry(event) {
+  event.preventDefault();
+  showDeleteModal();
+}
+
+$deleteEntryButton.addEventListener('click', handleDeleteEntry);
 
 // Adding a event listener for the "PhotoUrl" input
 $photoUrlInput.addEventListener('input', handlePhotoUrl);
