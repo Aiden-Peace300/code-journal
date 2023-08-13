@@ -30,6 +30,7 @@ const $viewTitle = document.querySelector('.view-title');
 const $deleteEntryButton = document.querySelector('#delete-entry-button');
 const $deleteModal = document.querySelector('#delete-modal');
 const $cancelDeleteButton = document.querySelector('#cancel-delete-button');
+const $deleteButton = document.querySelector('#delete-entry-button');
 
 // *************************************************************************************************//
 
@@ -161,6 +162,9 @@ function handleSubmit(event) {
     // Rendering a new DOM tree for the new entry and prepend it to the entries list
     const newEntryElement = renderEntry(newEntry);
     $entriesList.prepend(newEntryElement);
+
+    // Hide the "Delete Entry" button when adding a new entry
+    toggleDeleteButtonVisibility(false);
   } else {
     // Finding the index of the edited entry in the entries array
     let index = -1; // Initialize the index to -1 (not found)
@@ -271,6 +275,8 @@ function handleEditIconClicked(event) {
 
     data.editing = clickedEntry;
 
+    toggleDeleteButtonVisibility(true);
+
     // Pre-populating the entry form with the clicked entry's values
     $form.elements['note-title'].value = clickedEntry.title;
     $form.elements['photo-url'].value = clickedEntry.photoUrl;
@@ -303,6 +309,14 @@ function handleDeleteEntry(event) {
 function handleCancelDelete(event) {
   event.preventDefault(); // Prevent the default behavior of the link
   hideDeleteModal();
+}
+
+function toggleDeleteButtonVisibility(visible) {
+  if (visible) {
+    $deleteButton.removeAttribute('hidden');
+  } else {
+    $deleteButton.setAttribute('hidden', 'true');
+  }
 }
 
 $deleteEntryButton.addEventListener('click', handleDeleteEntry);
