@@ -26,8 +26,10 @@ const $entriesList = document.querySelector('#entries-list');
 const $noEntriesMessage = document.querySelector('.no-entries-message');
 
 const $viewTitle = document.querySelector('.view-title');
+
 const $deleteEntryButton = document.querySelector('#delete-entry-button');
 const $deleteModal = document.querySelector('#delete-modal');
+const $cancelDeleteButton = document.querySelector('#cancel-delete-button');
 
 // *************************************************************************************************//
 
@@ -289,12 +291,22 @@ function showDeleteModal() {
   $deleteModal.classList.add('block');
 }
 
+function hideDeleteModal() {
+  $deleteModal.classList.remove('block');
+}
+
 function handleDeleteEntry(event) {
   event.preventDefault();
   showDeleteModal();
 }
 
+function handleCancelDelete(event) {
+  event.preventDefault(); // Prevent the default behavior of the link
+  hideDeleteModal();
+}
+
 $deleteEntryButton.addEventListener('click', handleDeleteEntry);
+$cancelDeleteButton.addEventListener('click', handleCancelDelete);
 
 // Adding a event listener for the "PhotoUrl" input
 $photoUrlInput.addEventListener('input', handlePhotoUrl);
