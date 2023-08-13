@@ -31,6 +31,7 @@ const $deleteEntryButton = document.querySelector('#delete-entry-button');
 const $deleteModal = document.querySelector('#delete-modal');
 const $cancelDeleteButton = document.querySelector('#cancel-delete-button');
 const $deleteButton = document.querySelector('#delete-entry-button');
+const $confirmDeleteButton = document.querySelector('#confirm-delete-button');
 
 // *************************************************************************************************//
 
@@ -318,6 +319,43 @@ function toggleDeleteButtonVisibility(visible) {
     $deleteButton.setAttribute('hidden', 'true');
   }
 }
+
+function handleConfirmDelete(event) {
+  event.preventDefault(); // Prevent the default behavior of the button
+
+  // Finding the index of the entry to be deleted in the entries array
+  const entryIdToDelete = data.editing.entryId;
+  const indexToDelete = data.entries.findIndex(
+    (entry) => entry.entryId === entryIdToDelete
+  );
+
+  if (indexToDelete !== -1) {
+    // Removing the entry from the entries array
+    data.entries.splice(indexToDelete, 1);
+
+    // Removing the corresponding entry's li element from the DOM
+    const $entryToRemove = document.querySelector(
+      `[data-entry-id="${entryIdToDelete}"]`
+    );
+    if ($entryToRemove) {
+      $entriesList.removeChild($entryToRemove);
+    }
+
+    // Show or hide the "No entries" message as needed
+    toggleNoEntries(data.entries.length === 0);
+
+    // Hide the modal
+    hideDeleteModal();
+
+    // Swap to the "Entries" view
+    viewSwap('entries');
+
+    // Resetting data.editing to null
+    data.editing = null;
+  }
+}
+
+$confirmDeleteButton.addEventListener('click', handleConfirmDelete);
 
 $deleteEntryButton.addEventListener('click', handleDeleteEntry);
 $cancelDeleteButton.addEventListener('click', handleCancelDelete);
