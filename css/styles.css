@@ -23,9 +23,21 @@ img {
 }
 
 #header-style {
+  font-size: 1.3rem;
+}
+
+#header-style,
+#navbar-entries-link {
   color: white;
+  font-weight: bold;
+}
+
+#navbar-entries-link {
+  text-align: center;
+  padding-left: 1rem;
   font-size: 1rem;
-  font-weight: normal;
+  text-decoration: none;
+  margin: 1rem 0;
 }
 
 #image,
