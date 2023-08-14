@@ -23,9 +23,21 @@ img {
 }
 
 #header-style {
+  font-size: 1.3rem;
+}
+
+#header-style,
+#navbar-entries-link {
   color: white;
+  font-weight: bold;
+}
+
+#navbar-entries-link {
+  text-align: center;
+  padding-left: 1rem;
   font-size: 1rem;
-  font-weight: normal;
+  text-decoration: none;
+  margin: 1rem 0;
 }
 
 #image,
@@ -53,9 +65,10 @@ img {
   padding: 0.5rem;
 }
 
-.submit-button-to-bottom-left {
+.space-between {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  margin: 0.7rem;
 }
 
 .title-and-edit-icon-same-row,
@@ -152,7 +165,6 @@ img {
   }
 
   .entry-photo {
-    margin-left: 1rem;
     margin-right: 1rem;
   }
 
@@ -167,4 +179,89 @@ img {
 
 .edit-icon {
   cursor: pointer;
+}
+
+.delete-button {
+  border: none;
+  cursor: pointer;
+}
+
+/* Modal styles */
+.modal {
+  display: none;
+
+  /* Hide the modal by default */
+
+  /* To insure the rest of the page is has Semi-transparent background while
+    surveryQuestionPopupWindow is up */
+  background-color: rgba(0, 0, 0, 0.5);
+
+  /* Semi-transparent background */
+  width: 100vw;
+
+  /* Take up the full viewport width */
+  height: 100vh;
+
+  /* Take up the full viewport height */
+
+  /* The 'dark-body-class' element will cover the entire browser viewport. */
+  position: fixed;
+
+  /* The 'modal' element will cover the entire browser viewport. */
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+/* p tag has default margin and padding */
+.modal-content p {
+  margin: 0;
+  padding: 0;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-size: 1.5rem;
+  font-family: sans-serif;
+  font-weight: bold;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 3.5rem;
+}
+
+.confirm-button,
+.cancel-button {
+  padding: 0.5rem 1rem;
+  border-radius: 0.3rem;
+  cursor: pointer;
+}
+
+.confirm-button {
+  background-color: red;
+  color: white;
+  font-size: 1.2rem;
+  border: none;
+}
+
+.cancel-button {
+  background-color: lightgray;
+  color: black;
+  font-size: 1.2rem;
+  border: none;
+}
+
+.block {
+  display: block;
 }

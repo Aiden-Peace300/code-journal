@@ -26,6 +26,13 @@ const $entriesList = document.querySelector('#entries-list');
 const $noEntriesMessage = document.querySelector('.no-entries-message');
 
 const $viewTitle = document.querySelector('.view-title');
+
+const $deleteEntryButton = document.querySelector('#delete-entry-button');
+const $deleteModal = document.querySelector('#delete-modal');
+const $cancelDeleteButton = document.querySelector('#cancel-delete-button');
+const $deleteButton = document.querySelector('#delete-entry-button');
+const $confirmDeleteButton = document.querySelector('#confirm-delete-button');
+
 // *************************************************************************************************//
 
 // ***************************** handlePhotoUrl() (EVENT LISTENER FUNCTION) ************************//
@@ -156,6 +163,9 @@ function handleSubmit(event) {
     // Rendering a new DOM tree for the new entry and prepend it to the entries list
     const newEntryElement = renderEntry(newEntry);
     $entriesList.prepend(newEntryElement);
+
+    // Hide the "Delete Entry" button when adding a new entry
+    toggleDeleteButtonVisibility(false);
   } else {
     // Finding the index of the edited entry in the entries array
     let index = -1; // Initialize the index to -1 (not found)
@@ -266,6 +276,8 @@ function handleEditIconClicked(event) {
 
     data.editing = clickedEntry;
 
+    toggleDeleteButtonVisibility(true);
+
     // Pre-populating the entry form with the clicked entry's values
     $form.elements['note-title'].value = clickedEntry.title;
     $form.elements['photo-url'].value = clickedEntry.photoUrl;
@@ -281,6 +293,72 @@ function handleEditIconClicked(event) {
     viewSwap('entry-form');
   }
 }
+
+function showDeleteModal() {
+  $deleteModal.classList.add('block');
+}
+
+function hideDeleteModal() {
+  $deleteModal.classList.remove('block');
+}
+
+function handleDeleteEntry(event) {
+  event.preventDefault();
+  showDeleteModal();
+}
+
+function handleCancelDelete(event) {
+  event.preventDefault(); // Prevent the default behavior of the link
+  hideDeleteModal();
+}
+
+function toggleDeleteButtonVisibility(visible) {
+  if (visible) {
+    $deleteButton.removeAttribute('hidden');
+  } else {
+    $deleteButton.setAttribute('hidden', 'true');
+  }
+}
+
+function handleConfirmDelete(event) {
+  event.preventDefault(); // Prevent the default behavior of the button
+
+  // Finding the index of the entry to be deleted in the entries array
+  const entryIdToDelete = data.editing.entryId;
+  const indexToDelete = data.entries.findIndex(
+    (entry) => entry.entryId === entryIdToDelete
+  );
+
+  if (indexToDelete !== -1) {
+    // Removing the entry from the entries array
+    data.entries.splice(indexToDelete, 1);
+
+    // Removing the corresponding entry's li element from the DOM
+    const $entryToRemove = document.querySelector(
+      `[data-entry-id="${entryIdToDelete}"]`
+    );
+    if ($entryToRemove) {
+      $entriesList.removeChild($entryToRemove);
+    }
+
+    // Show or hide the "No entries" message as needed
+    toggleNoEntries(data.entries.length === 0);
+
+    // Hide the modal
+    hideDeleteModal();
+
+    // Swap to the "Entries" view
+    viewSwap('entries');
+
+    // Resetting data.editing to null
+    data.editing = null;
+  }
+}
+
+$confirmDeleteButton.addEventListener('click', handleConfirmDelete);
+
+$deleteEntryButton.addEventListener('click', handleDeleteEntry);
+$cancelDeleteButton.addEventListener('click', handleCancelDelete);
 
 // Adding a event listener for the "PhotoUrl" input
 $photoUrlInput.addEventListener('input', handlePhotoUrl);
