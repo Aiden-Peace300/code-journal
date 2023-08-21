@@ -356,7 +356,6 @@ function handleConfirmDelete(event) {
 }
 
 $confirmDeleteButton.addEventListener('click', handleConfirmDelete);
-
 $deleteEntryButton.addEventListener('click', handleDeleteEntry);
 $cancelDeleteButton.addEventListener('click', handleCancelDelete);
 
